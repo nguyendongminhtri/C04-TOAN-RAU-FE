@@ -25,10 +25,18 @@ import { RegisterComponent } from './form-login/register/register.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { LoginComponent } from './form-login/login/login.component';
+import { UserAccountComponent } from './form-login/user-account/user-account.component';
+import {AuthGuard} from './service/auth.guard';
+import {httpInterceptorProviders} from './service/auth.interceptor';
+import { CreateCategoryComponent } from './content/categoryManage/create-category/create-category.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent, data: { title: 'Home' } },
   { path: 'register', component: RegisterComponent, data: {title: 'Register'}},
+  { path: 'login', component: LoginComponent, data: {title: 'Login'}},
+  { path: 'user-account', component: UserAccountComponent, canActivate: [AuthGuard], data: {title: 'UserAccount'}  },
+  {path: 'create-category', component: CreateCategoryComponent, data: {title: 'CreateCategory'}},
   {
     path: 'guide/getting-started',
     component: GettingStartedComponent,
@@ -37,7 +45,7 @@ export const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, GettingStartedComponent, RegisterComponent],
+  declarations: [AppComponent, HomeComponent, GettingStartedComponent, RegisterComponent, LoginComponent, UserAccountComponent, CreateCategoryComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -55,7 +63,7 @@ export const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes, {useHash: false}), MatFormFieldModule, ReactiveFormsModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
